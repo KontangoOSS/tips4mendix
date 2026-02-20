@@ -1,3 +1,7 @@
+[Home](../README.md) > **Nanoflows**
+
+---
+
 # Mendix Nanoflows: A Comprehensive Guide
 
 ## Practical Reference for Mendix Developers
@@ -1568,3 +1572,11 @@ The exact convention does not matter as much as consistency. Pick one and stick 
 - [Mendix Documentation -- Client Activities](https://docs.mendix.com/refguide/client-activities/) -- Reference for Show Page, Show Message, and other client activities.
 - [Mendix Documentation -- Nanoflow Error Handling](https://docs.mendix.com/refguide/error-handling-in-nanoflows/) -- Official documentation on error handling in nanoflows.
 - [Mendix Documentation -- Data Synchronization](https://docs.mendix.com/refguide/synchronization/) -- How offline data sync works, including conflict resolution.
+
+---
+
+<div align="center">
+
+**[Back to Home](../README.md)**
+
+</div>
