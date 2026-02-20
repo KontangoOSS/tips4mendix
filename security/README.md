@@ -1,3 +1,7 @@
+[Home](../README.md) > **Security**
+
+---
+
 # Mendix Security Best Practices
 
 ## A Comprehensive Guide for Mendix Developers
@@ -2364,3 +2368,11 @@ Set up alerts for:
 - [OWASP Dependency-Check](https://owasp.org/www-project-dependency-check/)
 - [Mozilla Observatory](https://observatory.mozilla.org/) -- Online tool for evaluating security headers
 - [SecurityHeaders.com](https://securityheaders.com/) -- Quick header analysis
+
+---
+
+<div align="center">
+
+**[Back to Home](../README.md)**
+
+</div>
