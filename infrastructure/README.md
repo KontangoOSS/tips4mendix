@@ -1,3 +1,7 @@
+[Home](../README.md) > **Infrastructure**
+
+---
+
 # Core Infrastructure for Mendix Applications
 
 ## A Practical Guide to Runtime, Database, Storage, Networking, and Operations
@@ -741,3 +745,11 @@ Use a VPN when the database is in a different network, developers need emergency
 ---
 
 *Covers Mendix 9.x and 10.x. Some settings differ in earlier versions. See the [Mendix Runtime Reference](https://docs.mendix.com/refguide/runtime/) for version-specific details.*
+
+---
+
+<div align="center">
+
+**[Back to Home](../README.md)**
+
+</div>
