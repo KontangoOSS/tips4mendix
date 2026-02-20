@@ -1,3 +1,7 @@
+[Home](../README.md) > **CI/CD**
+
+---
+
 # CI/CD for Mendix Applications
 
 ## A Comprehensive Guide for Mendix Developers
@@ -788,3 +792,11 @@ release/1.2 ──●────●
 | `MENDIX_REPO_ID` | Repository ID (Git-based only) |
 | `ATS_TOKEN` | ATS API token |
 | `SLACK_WEBHOOK` | Notification webhook |
+
+---
+
+<div align="center">
+
+**[Back to Home](../README.md)**
+
+</div>
