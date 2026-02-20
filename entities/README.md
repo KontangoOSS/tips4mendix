@@ -1,3 +1,7 @@
+[Home](../README.md) > **Entities & Domain Modeling**
+
+---
+
 # Mendix Entities and Domain Modeling Guide
 
 ## A Practical Reference for Mendix Developers
@@ -1818,3 +1822,11 @@ Entity: [EntityName]
 - [Mendix Non-Persistable Objects](https://docs.mendix.com/refguide/persistability/)
 - [Mendix Data Validation](https://docs.mendix.com/refguide/validation-rules/)
 - [Mendix Performance Best Practices](https://docs.mendix.com/howto/general/community-best-practices-for-app-performance/)
+
+---
+
+<div align="center">
+
+**[Back to Home](../README.md)**
+
+</div>
