@@ -1,3 +1,7 @@
+[Home](../README.md) > **Pages & UI**
+
+---
+
 # Mendix Pages and UI Design Guide
 
 ## A Practical Reference for Building Effective User Interfaces in Mendix
@@ -2733,3 +2737,11 @@ Implement error states using a nanoflow that catches errors from data retrieval 
 - [Mendix Marketplace](https://marketplace.mendix.com/)
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
 - [MDN Web Accessibility Guide](https://developer.mozilla.org/en-US/docs/Web/Accessibility)
+
+---
+
+<div align="center">
+
+**[Back to Home](../README.md)**
+
+</div>
