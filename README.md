@@ -1,5 +1,9 @@
 <div align="center">
 
+<img src="./assets/mendix-logo.svg" alt="Mendix" width="280">
+
+<br><br>
+
 # Tips for Mendix
 
 **A practical, open-source knowledge base for building, deploying, and securing Mendix applications.**
