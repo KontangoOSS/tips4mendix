@@ -1,3 +1,7 @@
+[Home](../README.md) > **Microflows**
+
+---
+
 # Mendix Microflows: A Comprehensive Guide
 
 Microflows are the backbone of server-side logic in Mendix. This guide covers everything from the basics of the microflow editor to advanced patterns, performance tuning, and debugging. It is written for developers who want practical, actionable knowledge rather than a restatement of the documentation.
@@ -1464,3 +1468,11 @@ Microflows are the workhorse of Mendix application logic. The key principles to 
 8. **Keep UI and logic separate.** Action microflows handle the UI; sub-microflows handle the logic.
 
 Master these principles and you will build Mendix applications that are performant, maintainable, and reliable.
+
+---
+
+<div align="center">
+
+**[Back to Home](../README.md)**
+
+</div>
