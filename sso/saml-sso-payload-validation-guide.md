@@ -1,10 +1,14 @@
+[Home](../README.md) > **SSO / SAML Payload Validation**
+
+---
+
 # SAML/SSO Payload Validation Guide
 
 ## What this is for
 
 So you've got two domains that are both supposed to be producing the same SAML response, but something's off. Maybe one domain works fine and the other throws errors, maybe the attributes don't line up, maybe one just silently fails. This guide is how you figure out where the mismatch is.
 
-We're also going to talk about what happens when there's a load balancer or reverse proxy in the mix (because there almost always is), and what changes when you're doing this in an ITAR or FedRAMP environment.
+This guide also covers what happens when there's a load balancer or reverse proxy in the mix (because there almost always is).
 
 ---
 
@@ -102,7 +106,7 @@ This one is going to be different between domains, and that's fine. It's just th
 </saml:AudienceRestriction>
 ```
 
-This trips people up all the time. If both domains are supposed to be the same SP, this value needs to match between both payloads. If the IdP was set up with two separate SP configs, these are going to be different, and the SP is going to reject whichever one doesn't match its own entity ID. We've seen this one a lot.
+This trips people up all the time. If both domains are supposed to be the same SP, this value needs to match between both payloads. If the IdP was set up with two separate SP configs, these are going to be different, and the SP is going to reject whichever one doesn't match its own entity ID. This is one of the most common causes of SSO failures.
 
 ### NameID
 
@@ -188,7 +192,7 @@ For SP-initiated flows you can start from the login URL in Postman and follow th
 
 ## What happens when there's a load balancer or reverse proxy in the way
 
-There almost always is one, and it can mess with SAML validation in a bunch of ways. Here's what we see the most:
+There almost always is one, and it can mess with SAML validation in a bunch of ways. Here are the most common issues:
 
 ### ACS URL mismatch
 
@@ -228,74 +232,6 @@ Big SAML responses — especially when someone's in 50 AD groups and the IdP sen
 
 ---
 
-## ITAR and FedRAMP: what's different
-
-If you're in an ITAR or FedRAMP environment, everything above still applies — but there's a bunch of extra stuff you have to think about. This isn't optional, this is the kind of thing that shows up in audits.
-
-### Payloads stay inside the boundary
-
-SAML payloads have PII in them — NameID, email, attributes, all of it. Everything you capture has to stay within the authorization boundary. That means you don't paste payloads into some random online SAML decoder. Decode and inspect everything locally with the commands in this guide, or use Postman running on a boundary-approved workstation.
-
-### Your tools have to be approved
-
-- Browser extensions like SAML Tracer might not be on the approved list for GFE (Government Furnished Equipment). Check your SSP before you install anything.
-- Postman, and anything else you use for debugging, needs to be on the approved software list for your boundary.
-- Stick to CLI tools that are already on the box — `base64`, `xmllint`, `openssl`, `diff` — these are on most approved Linux systems already.
-
-### The IdP itself has to be compliant
-
-| Standard | What that means |
-|---|---|
-| **FedRAMP** | The IdP has to be FedRAMP-authorized or live inside the boundary. Okta has a FedRAMP Moderate offering. Azure AD has GCC and GCC-High. Ping Identity works too. |
-| **ITAR** | The IdP has to be in a US-only environment and only US persons can have access to it. Azure GCC-High and AWS GovCloud-based IdPs work. On-prem ADFS works. Standard commercial Okta or Azure AD does not cut it. |
-
-If one domain is pointed at a compliant IdP and the other is pointed at a commercial one, that's not just a payload mismatch — that's a compliance finding. Escalate it.
-
-### Assertions should be encrypted, not just signed
-
-In these environments you're typically required to encrypt SAML assertions. Look for `<saml:EncryptedAssertion>` in the payload. If Domain A is sending encrypted assertions and Domain B is sending them in plaintext, that's a compliance gap on top of being a functional difference.
-
-If you need to decrypt an assertion to actually compare it, you'll need the SP's private key:
-
-```bash
-xmlsec1 --decrypt --privkey-pem sp-private-key.pem domain_a_saml.xml
-```
-
-That private key is a critical crypto asset — do not move it off the SP host or outside the boundary. Run the decryption on the SP itself or on a boundary-approved workstation. This isn't a suggestion, it's a requirement.
-
-### FIPS 140-2 crypto requirements
-
-- `rsa-sha256` minimum for signatures. If you see `rsa-sha1` anywhere, that's not FIPS-compliant and needs to be fixed.
-- RSA keys have to be 2048-bit or higher.
-- If the SP or IdP runs OpenSSL, it needs to be the FIPS-validated module.
-- TLS 1.2+ for everything — browser to SP, browser to IdP, SP to IdP metadata endpoints. No exceptions.
-
-### Certs and key management
-
-- Signing and encryption certs need to come from a FIPS-validated PKI or go through an approved cert management process.
-- Cert rotations have to go through change management (FedRAMP CA-family controls).
-- If the two domains use different SP certs, the IdP needs to have both registered, and it needs to be documented in the SSP.
-
-### Network path stuff
-
-The network between IdP and SP in these environments is usually more locked down than you'd expect:
-
-- Traffic might go through a CASB or a TIC (Trusted Internet Connection), either of which can modify headers or add latency you weren't planning for.
-- One domain might have VPN or private connectivity to the IdP while the other doesn't, and that alone can cause them to behave differently.
-- Boundary firewalls can block metadata refresh endpoints. If they do, one side ends up with stale certs and things break without any obvious reason why.
-
-### You have to log everything
-
-Every debugging action needs an audit trail:
-- Who looked at the SAML payloads
-- When they were captured
-- Where they got stored
-- When they were deleted
-
-This is FedRAMP AU controls and ITAR record-keeping. When you're done debugging, clean up. Delete the captured payloads. Auditors will absolutely flag PII sitting around in debug files.
-
----
-
 ## Quick reference — what you're seeing vs. what's probably wrong
 
 | What you're seeing | What's probably going on |
@@ -312,3 +248,11 @@ This is FedRAMP AU controls and ITAR record-keeping. When you're done debugging,
 ---
 
 Start with the diff, go through the fields top to bottom, and the mismatch will show up. If everything in the payload looks right but it's still not working, look at the network layer. Load balancers and proxies are almost always the culprit when two "identical" configs don't behave the same way.
+
+---
+
+<div align="center">
+
+**[Back to Home](../README.md)**
+
+</div>
